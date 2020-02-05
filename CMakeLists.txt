@@ -4,4 +4,7 @@ project(meshy)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(mystl "mystl.cpp")
+file(GLOB SOURCES "src/*.cpp")
+include_directories("src")
+
+add_executable(mystl "mystl.cpp" ${SOURCES})

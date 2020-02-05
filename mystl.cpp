@@ -1,7 +1,8 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
 #include <filesystem>
+
+#include "stl.h"
 
 /* 
 char[80] (80 bytes) – Header
@@ -16,46 +17,6 @@ foreach triangle
 end 
 */
 
-struct STLMetadata {
-    char header[80];
-    char n_facets[4];
-};
-
-struct FacetBuffer {
-    char normal[12];
-    char v1[12];
-    char v2[12];
-    char v3[12];
-    char byte_count[2];
-};
-
-struct Facet {
-    float normal[3];
-    float v1[3];
-    float v2[3];
-    float v3[3];
-};
-
-
-unsigned int read_number_of_facets(std::ifstream& in) {
-
-    STLMetadata meta{};
-
-    in.read(meta.header,   sizeof(meta.header));
-    in.read(meta.n_facets, sizeof(meta.n_facets));
-
-    unsigned int n_facets;
-    std::memcpy(&n_facets, meta.n_facets, 4);
-
-    return n_facets;
-}
-
-void parse_point(char* buf, float* arr) {
-    for (int i = 0; i < 3; i++) {
-        float* dst_addr = arr + i;
-        std::memcpy(dst_addr, buf + 4*i, 4);
-    }
-}
 
 int main(int argc, char** argv) {
 

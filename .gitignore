@@ -1,0 +1,5 @@
+*~*
+build/*
+cmake-build-debug/*
+*.pyc
+*.DS_Store

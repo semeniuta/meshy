@@ -1,4 +1,11 @@
+#ifndef MESHY_STL_H
+#define MESHY_STL_H
+
 #include <fstream>
+#include <vector>
+#include <Eigen/Dense>
+
+using Eigen::VectorXd;
 
 struct STLMetadata {
     char header[80];
@@ -20,6 +27,10 @@ struct Facet {
     float v3[3];
 };
 
-unsigned int read_number_of_facets(std::ifstream& in);
+unsigned int read_number_of_facets(std::ifstream &in);
 
-void parse_point(char* buf, float* arr);
+void parse_point(char *buf, float *arr);
+
+std::vector<Facet> read_stl(const std::string& fname);
+
+#endif //MESHY_STL_H

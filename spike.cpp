@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include "stl.h"
+#include "shapedist.h"
 
 using Eigen::VectorXd;
 
@@ -21,6 +22,8 @@ int main(int argc, char **argv) {
     std::cout << facets.size() << std::endl;
 
     std::cout << facets[0].normal << std::endl;
+
+    std::vector<double> ca = cummulative_area(facets);
 
     return 0;
 }

@@ -13,11 +13,18 @@ unsigned int read_number_of_facets(std::ifstream& in) {
     return n_facets;
 }
 
-void parse_point(char* buf, float* arr) {
+VectorXd parse_point(char* buf) {
+
+    float arr[3];
+    VectorXd vec{3};
+
     for (int i = 0; i < 3; i++) {
         float* dst_addr = arr + i;
         std::memcpy(dst_addr, buf + 4 * i, 4);
+        vec(i) = arr[i];
     }
+
+    return vec;
 }
 
 std::vector<Facet> read_stl(const std::string& fname) {
@@ -40,10 +47,10 @@ std::vector<Facet> read_stl(const std::string& fname) {
         if (!in.eof()) {
 
             Facet facet{};
-            parse_point(fbuf.normal, facet.normal);
-            parse_point(fbuf.v1,     facet.v1);
-            parse_point(fbuf.v2,     facet.v2);
-            parse_point(fbuf.v3,     facet.v3);
+            facet.normal = parse_point(fbuf.normal);
+            facet.v1 = parse_point(fbuf.v1);
+            facet.v2 = parse_point(fbuf.v2);
+            facet.v3 = parse_point(fbuf.v3);
 
             facets.push_back(facet);
         }

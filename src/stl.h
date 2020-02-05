@@ -21,15 +21,15 @@ struct FacetBuffer {
 };
 
 struct Facet {
-    float normal[3];
-    float v1[3];
-    float v2[3];
-    float v3[3];
+    VectorXd normal;
+    VectorXd v1;
+    VectorXd v2;
+    VectorXd v3;
 };
 
 unsigned int read_number_of_facets(std::ifstream &in);
 
-void parse_point(char *buf, float *arr);
+VectorXd parse_point(char* buf);
 
 std::vector<Facet> read_stl(const std::string& fname);
 

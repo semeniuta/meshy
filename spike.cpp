@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "stl.h"
 #include "shapedist.h"
 
@@ -24,6 +25,13 @@ int main(int argc, char **argv) {
     std::cout << facets[0].normal << std::endl;
 
     std::vector<double> ca = cummulative_area(facets);
+
+    auto idx_closest = search_closest(ca, 20.);
+    std::cout << "Closest: " << ca[idx_closest] << std::endl;
+
+    auto res = std::lower_bound(ca.begin(), ca.end(), 20.);
+
+    std::cout << *(res - 1) << ", " << *res << ", " << *(res + 1) << std::endl;
 
     return 0;
 }

@@ -41,3 +41,18 @@ std::vector<double> cummulative_area(const std::vector<Facet>& facets) {
     return arr;
 
 }
+
+long search_closest(const std::vector<double>& sorted_array, double val) {
+
+    auto iter_geq = std::lower_bound(sorted_array.begin(), sorted_array.end(), val);
+
+    double a = *(iter_geq - 1);
+    double b = *(iter_geq);
+
+    if (fabs(val - a) < fabs(val - b)) {
+        return iter_geq - sorted_array.begin() - 1;
+    }
+
+    return iter_geq - sorted_array.begin();
+
+}

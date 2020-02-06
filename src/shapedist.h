@@ -13,4 +13,6 @@ double triangle_area(const Facet& facet);
 
 std::vector<double> cummulative_area(const std::vector<Facet>& facets);
 
+long search_closest(const std::vector<double>& sorted_array, double val);
+
 #endif //MESHY_SHAPEDIST_H

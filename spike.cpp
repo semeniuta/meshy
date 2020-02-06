@@ -24,7 +24,9 @@ int main(int argc, char **argv) {
 
     std::cout << facets[0].normal << std::endl;
 
-    std::vector<double> ca = cummulative_area(facets);
+    std::vector<double> areas(facets.size());
+    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::vector<double> ca = cummulative_area(areas);
 
     auto idx_closest = search_closest(ca, 20.);
     std::cout << "Closest: " << ca[idx_closest] << std::endl;

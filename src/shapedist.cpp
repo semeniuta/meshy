@@ -25,20 +25,19 @@ double triangle_area(const Facet& facet) {
 
 }
 
-std::vector<double> cummulative_area(const std::vector<Facet>& facets) {
+std::vector<double> cummulative_area(const std::vector<double>& areas) {
 
     double area_so_far = 0.;
-    std::vector<double> arr;
+    std::vector<double> ca;
 
-    for (const auto& facet : facets) {
+    for (const auto& a : areas) {
 
-        double a = triangle_area(facet);
         area_so_far += a;
-        arr.push_back(area_so_far);
+        ca.push_back(area_so_far);
 
     }
 
-    return arr;
+    return ca;
 
 }
 

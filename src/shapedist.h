@@ -11,7 +11,7 @@ double euclidean_distance(const VectorXd& v1, const VectorXd& v2);
 
 double triangle_area(const Facet& facet);
 
-std::vector<double> cummulative_area(const std::vector<Facet>& facets);
+std::vector<double> cummulative_area(const std::vector<double>& areas);
 
 long search_closest(const std::vector<double>& sorted_array, double val);
 

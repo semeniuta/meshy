@@ -35,5 +35,7 @@ int main(int argc, char **argv) {
 
     std::cout << *(res - 1) << ", " << *res << ", " << *(res + 1) << std::endl;
 
+    auto distances = generate_d2_samples(facets, ca, 100000);
+
     return 0;
 }

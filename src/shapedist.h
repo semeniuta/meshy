@@ -23,4 +23,6 @@ std::vector<double> generate_d2_samples(
         const std::vector<double>& ca,
         unsigned int n);
 
+std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples);
+
 #endif //MESHY_SHAPEDIST_H

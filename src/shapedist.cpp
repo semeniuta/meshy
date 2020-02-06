@@ -115,3 +115,15 @@ std::vector<double> generate_d2_samples(
     return distances;
 
 }
+
+std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples) {
+
+    std::vector<Facet> facets = read_stl(fname);
+
+    std::vector<double> areas(facets.size());
+    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::vector<double> ca = cummulative_area(areas);
+
+    return generate_d2_samples(facets, ca, n_samples);
+
+}

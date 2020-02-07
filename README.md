@@ -17,9 +17,9 @@ foreach triangle
 end 
 ```
 
-To use `conda` Python when building (repalce `myenv` with the name of your `conda` environment):
+To use `conda` Python when building:
 
 ```bash
-cmake -DPYTHON_LIBRARY=$HOME/miniconda3/envs/myenv/lib/libpython3.6m.dylib -DPYTHON_EXECUTABLE=/$HOME/miniconda3/envs/myenv/bin/python ..
+cmake -DPYTHON_LIBRARY=$CONDA_PREFIX/lib/libpython3.6m.dylib -DPYTHON_EXECUTABLE=$CONDA_PREFIX/bin/python ..
 ```
 

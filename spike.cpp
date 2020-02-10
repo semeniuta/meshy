@@ -63,5 +63,7 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
 
+    MeshGraph mesh_graph{facets};
+
     return 0;
 }

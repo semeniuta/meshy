@@ -7,8 +7,12 @@
 
 #include "stl.h"
 #include <set>
+#include <map>
 
-using Segment = std::set<int>;
+class Segment : public std::set<int> {
+public:
+    Segment(int p1, int p2) : std::set<int>{p1, p2} {};
+};
 
 struct IndexedFacet {
     VectorXd normal;
@@ -23,9 +27,12 @@ struct IndexedFacet {
 class MeshGraph {
 
 private:
-
+    std::vector<IndexedFacet> facets_;
     std::vector<VectorXd> vertices_;
+    std::map<Segment, std::vector<int>> segments_;
 
+public:
+    MeshGraph(const std::vector<Facet>& facets);
 
 
 

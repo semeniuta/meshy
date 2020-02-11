@@ -1,4 +1,5 @@
 #include "stl.h"
+#include <iostream>
 
 unsigned int read_number_of_facets(std::ifstream& in) {
 
@@ -7,8 +8,15 @@ unsigned int read_number_of_facets(std::ifstream& in) {
     in.read(meta.header, sizeof(meta.header));
     in.read(meta.n_facets, sizeof(meta.n_facets));
 
+    char h[81];
+    std::memcpy(h, meta.header, 80);
+    h[80] = '\0';
+    std::cout << "Header: " << h << std::endl;
+
     unsigned int n_facets;
     std::memcpy(&n_facets, meta.n_facets, 4);
+
+    std::cout << "Number of facets: " << n_facets << std::endl;
 
     return n_facets;
 }
@@ -64,5 +72,53 @@ std::vector<Facet> read_stl(const std::string& fname) {
     }
 
     return facets;
+
+}
+
+void fill_point_data(const VectorXd& v, char* dst) {
+
+    for (int i = 0; i < 3; i++) {
+        auto x = (float)v(i);
+        std::memcpy(dst + 4 * i, &x, 4);
+    }
+}
+
+void write_stl(const std::vector<Facet>& facets, const std::string& fname, const std::string& header) {
+
+    std::ofstream out{fname};
+
+    char h[80];
+    std::fill(h, h+80, 0);
+    std::memcpy(h, header.c_str(), 80);
+    std::cout << "New header: " << h << std::endl;
+
+    auto nf = facets.size();
+    char n_facets[4];
+    std::memcpy(n_facets, &nf, 4);
+
+    out.write(h, 80);
+    out.write(n_facets, 4);
+
+    char point_buf[12];
+    char byte_count[2] = {0, 0};
+
+    for (const auto& facet : facets) {
+
+        fill_point_data(facet.normal, point_buf);
+        out.write(point_buf, 12);
+
+        fill_point_data(facet.v1, point_buf);
+        out.write(point_buf, 12);
+
+        fill_point_data(facet.v2, point_buf);
+        out.write(point_buf, 12);
+
+        fill_point_data(facet.v3, point_buf);
+        out.write(point_buf, 12);
+
+        out.write(byte_count, 2);
+    }
+
+    out.close();
 
 }

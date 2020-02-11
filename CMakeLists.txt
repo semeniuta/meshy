@@ -14,6 +14,9 @@ include_directories("src")
 add_executable(spike "spike.cpp" ${SOURCES})
 target_link_libraries(spike Eigen3::Eigen)
 
+add_executable(scaler "scaler.cpp" ${SOURCES})
+target_link_libraries(scaler Eigen3::Eigen)
+
 add_executable(spikernd "spikernd.cpp" ${SOURCES})
 target_link_libraries(spikernd Eigen3::Eigen)
 

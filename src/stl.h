@@ -6,6 +6,7 @@
 #include <Eigen/Dense>
 
 using Eigen::VectorXd;
+using Eigen::MatrixXd;
 
 struct STLMetadata {
     char header[80];
@@ -36,5 +37,9 @@ void fill_point_data(const VectorXd& v, char* dst);
 std::vector<Facet> read_stl(const std::string& fname);
 
 void write_stl(const std::vector<Facet>& facets, const std::string& fname, const std::string& header);
+
+VectorXd transform_point(const VectorXd& p, const MatrixXd& T);
+
+std::vector<Facet> transform_facets(const std::vector<Facet>& facets, const MatrixXd& T);
 
 #endif //MESHY_STL_H

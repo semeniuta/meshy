@@ -122,3 +122,45 @@ void write_stl(const std::vector<Facet>& facets, const std::string& fname, const
     out.close();
 
 }
+
+VectorXd transform_point(const VectorXd& p, const MatrixXd& T) {
+
+    auto space_size = p.size();
+    auto homog_size = space_size + 1;
+
+    if ((T.rows() != T.cols()) || (homog_size != T.cols())) {
+        throw std::runtime_error("Dimension mismatch");
+    }
+
+    VectorXd p_h{homog_size};
+    p_h.head(space_size) = p;
+    p_h(homog_size - 1) = 1.;
+
+    auto p_t = T * p_h;
+
+    VectorXd result{space_size};
+    result = p_t.head(space_size) / p_t(space_size);
+
+    return result;
+
+}
+
+std::vector<Facet> transform_facets(const std::vector<Facet>& facets, const MatrixXd& T) {
+
+    std::vector<Facet> transformed_facets;
+
+    for (const auto& f : facets) {
+
+        Facet f_t;
+        f_t.normal = f.normal;
+        f_t.v1 = transform_point(f.v1, T);
+        f_t.v2 = transform_point(f.v2, T);
+        f_t.v3 = transform_point(f.v3, T);
+
+        transformed_facets.push_back(f_t);
+
+    }
+
+    return transformed_facets;
+
+}

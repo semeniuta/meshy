@@ -29,6 +29,11 @@ struct VertexInfo {
     int facet_id;
 };
 
+struct VertexAggregated {
+    VectorXd v;
+    std::vector<int> facets;
+};
+
 class MeshGraph {
 
 private:

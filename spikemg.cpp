@@ -50,6 +50,37 @@ VertexInfoComparator create_comparator_joint(double tol=1e-6) {
     };
 }
 
+std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& sorted_vertices, double tol=1e-6) {
+
+    std::vector<VertexAggregated> res;
+
+    int current_i = 0;
+    std::vector<int> facet_ids;
+    facet_ids.push_back(sorted_vertices[current_i].facet_id);
+
+    for (int i = 1; i < sorted_vertices.size(); i++) {
+
+        const auto& current_vertex = sorted_vertices[current_i];
+        const auto& next_vertex = sorted_vertices[i];
+
+        double d = (current_vertex.v - next_vertex.v).norm();
+        if (d <= tol) {
+            facet_ids.push_back(next_vertex.facet_id);
+            continue;
+        }
+
+        res.push_back({current_vertex.v, std::move(facet_ids)});
+
+        current_i = i;
+        facet_ids = std::vector<int>();
+        facet_ids.push_back(sorted_vertices[current_i].facet_id);
+
+    }
+
+    return res;
+
+}
+
 int main(int argc, char **argv) {
 
     if (argc < 2) {
@@ -63,11 +94,27 @@ int main(int argc, char **argv) {
     auto all_vertices = gather_vertices(facets);
     std::sort(all_vertices.begin(), all_vertices.end(), create_comparator_joint());
 
-    for (int i = 0; i < 100; i++) {
+    std::cout << "\nSorted vertices:\n"<< std::endl;
+    for (int i = 0; i < 20; i++) {
         const auto& v = all_vertices[i].v;
         int fid = all_vertices[i].facet_id;
         std::cout << v(0) << " " << v(1) << " " << v(2);
         std::cout << "(" << fid << ")" << std::endl;
+    }
+
+    auto vaggr = aggregate_vertices(all_vertices);
+
+    std::cout << "\nAggregated vertices:\n"<< std::endl;
+    for (int i = 0; i < 20; i++) {
+        const auto& v = vaggr[i].v;
+        std::cout << v(0) << " " << v(1) << " " << v(2);
+
+        std::cout << " (";
+        for (int fid : vaggr[i].facets) {
+            std::cout << fid << " ";
+        }
+        std::cout << ")"<< std::endl;
+
     }
 
     return 0;

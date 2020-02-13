@@ -29,6 +29,8 @@ struct VertexInfo {
     int facet_id;
 };
 
+using VertexInfoComparator = std::function<bool(const VertexInfo&, const VertexInfo&)>;
+
 struct VertexAggregated {
     VectorXd v;
     std::vector<int> facets;
@@ -44,9 +46,12 @@ private:
 public:
     MeshGraph(const std::vector<Facet>& facets);
 
-
-
 };
 
+std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets);
+
+VertexInfoComparator create_comparator_joint(double tol=1e-6);
+
+std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& sorted_vertices, double tol=1e-6);
 
 #endif //MESHY_MESHGRAPH_H

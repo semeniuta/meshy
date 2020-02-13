@@ -6,7 +6,24 @@
 
 MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
 
-    // TODO
+    auto vertices_all = gather_vertices(facets);
+    std::sort(vertices_all.begin(), vertices_all.end(), create_comparator_joint());
+
+    auto vertices_aggr = aggregate_vertices(vertices_all);
+
+    facets_ = gather_indexed_facets(vertices_aggr, facets);
+
+    for (int facet_idx = 0; facet_idx < facets.size(); facet_idx++) {
+
+        const auto& s1 = facets_[facet_idx].segments[0];
+        const auto& s2 = facets_[facet_idx].segments[1];
+        const auto& s3 = facets_[facet_idx].segments[2];
+
+        segments_[s1].push_back(facet_idx);
+        segments_[s2].push_back(facet_idx);
+        segments_[s3].push_back(facet_idx);
+
+    }
 
 }
 

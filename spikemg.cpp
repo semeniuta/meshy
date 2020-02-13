@@ -47,5 +47,7 @@ int main(int argc, char **argv) {
 
     }
 
+    std::vector<IndexedFacet> indexed_facets = gather_indexed_facets(vaggr, facets);
+
     return 0;
 }

@@ -8,6 +8,7 @@
 #include "stl.h"
 #include <set>
 #include <map>
+#include <array>
 
 class Segment : public std::set<int> {
 public:
@@ -16,12 +17,8 @@ public:
 
 struct IndexedFacet {
     VectorXd normal;
-    int v1;
-    int v2;
-    int v3;
-    Segment s1;
-    Segment s2;
-    Segment s3;
+    std::array<int, 3> vertices;
+    std::array<Segment, 3> segments;
 };
 
 struct FacetVertex {
@@ -58,5 +55,9 @@ std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets);
 VertexInfoComparator create_comparator_joint(double tol=1e-6);
 
 std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& sorted_vertices, double tol=1e-6);
+
+std::vector<IndexedFacet> gather_indexed_facets(
+        const std::vector<VertexAggregated>& va,
+        const std::vector<Facet>& facets);
 
 #endif //MESHY_MESHGRAPH_H

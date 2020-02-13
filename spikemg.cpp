@@ -5,10 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
-#include <functional>
 #include "stl.h"
-#include "shapedist.h"
 #include "MeshGraph.h"
 
 using Eigen::VectorXd;
@@ -30,7 +27,7 @@ int main(int argc, char **argv) {
     std::cout << "\nSorted vertices:\n"<< std::endl;
     for (int i = 0; i < 20; i++) {
         const auto& v = all_vertices[i].v;
-        int fid = all_vertices[i].facet_id;
+        int fid = all_vertices[i].facet.facet_id;
         std::cout << v(0) << " " << v(1) << " " << v(2);
         std::cout << "(" << fid << ")" << std::endl;
     }
@@ -43,8 +40,8 @@ int main(int argc, char **argv) {
         std::cout << v(0) << " " << v(1) << " " << v(2);
 
         std::cout << " (";
-        for (int fid : vaggr[i].facets) {
-            std::cout << fid << " ";
+        for (const auto& f : vaggr[i].facets) {
+            std::cout << f.facet_id << "[" << f.vertex_id_within_facet << "] ";
         }
         std::cout << ")"<< std::endl;
 

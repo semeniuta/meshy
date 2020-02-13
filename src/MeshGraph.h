@@ -24,16 +24,21 @@ struct IndexedFacet {
     Segment s3;
 };
 
+struct FacetVertex {
+    int facet_id;
+    int vertex_id_within_facet;
+};
+
 struct VertexInfo {
     VectorXd v;
-    int facet_id;
+    FacetVertex facet;
 };
 
 using VertexInfoComparator = std::function<bool(const VertexInfo&, const VertexInfo&)>;
 
 struct VertexAggregated {
     VectorXd v;
-    std::vector<int> facets;
+    std::vector<FacetVertex> facets;
 };
 
 class MeshGraph {

@@ -49,9 +49,9 @@ std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets) {
 
     int facet_index = 0;
     for (const auto& f : facets) {
-        vertices.push_back({f.v1, facet_index});
-        vertices.push_back({f.v2, facet_index});
-        vertices.push_back({f.v3, facet_index});
+        vertices.push_back({f.v1, facet_index, 0});
+        vertices.push_back({f.v2, facet_index, 1});
+        vertices.push_back({f.v3, facet_index, 2});
 
         facet_index++;
     }
@@ -84,8 +84,8 @@ std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& 
     std::vector<VertexAggregated> res;
 
     int current_i = 0;
-    std::vector<int> facet_ids;
-    facet_ids.push_back(sorted_vertices[current_i].facet_id);
+    std::vector<FacetVertex> facet_ids;
+    facet_ids.push_back(sorted_vertices[current_i].facet);
 
     for (int i = 1; i < sorted_vertices.size(); i++) {
 
@@ -94,15 +94,15 @@ std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& 
 
         double d = (current_vertex.v - next_vertex.v).norm();
         if (d <= tol) {
-            facet_ids.push_back(next_vertex.facet_id);
+            facet_ids.push_back(next_vertex.facet);
             continue;
         }
 
         res.push_back({current_vertex.v, std::move(facet_ids)});
 
         current_i = i;
-        facet_ids = std::vector<int>();
-        facet_ids.push_back(sorted_vertices[current_i].facet_id);
+        facet_ids = std::vector<FacetVertex>();
+        facet_ids.push_back(sorted_vertices[current_i].facet);
 
     }
 

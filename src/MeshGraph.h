@@ -24,6 +24,11 @@ struct IndexedFacet {
     Segment s3;
 };
 
+struct VertexInfo {
+    VectorXd v;
+    int facet_id;
+};
+
 class MeshGraph {
 
 private:

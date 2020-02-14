@@ -9,9 +9,9 @@ MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
     auto vertices_all = gather_vertices(facets);
     std::sort(vertices_all.begin(), vertices_all.end(), create_comparator_joint());
 
-    auto vertices_aggr = aggregate_vertices(vertices_all);
+    vertices_ = aggregate_vertices(vertices_all);
 
-    facets_ = gather_indexed_facets(vertices_aggr, facets);
+    facets_ = gather_indexed_facets(vertices_, facets);
 
     for (int facet_idx = 0; facet_idx < facets.size(); facet_idx++) {
 

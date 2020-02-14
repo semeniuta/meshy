@@ -42,7 +42,7 @@ class MeshGraph {
 
 private:
     std::vector<IndexedFacet> facets_;
-    std::vector<VectorXd> vertices_;
+    std::vector<VertexAggregated> vertices_;
     std::map<Segment, std::vector<int>> segments_;
 
 public:

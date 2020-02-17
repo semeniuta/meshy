@@ -4,9 +4,11 @@
 #include <fstream>
 #include <vector>
 #include <Eigen/Dense>
+#include <Eigen/Geometry>
 
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
+using Eigen::Vector3d;
 
 struct STLMetadata {
     char header[80];
@@ -39,6 +41,8 @@ std::vector<Facet> read_stl(const std::string& fname);
 void write_stl(const std::vector<Facet>& facets, const std::string& fname, const std::string& header);
 
 VectorXd transform_point(const VectorXd& p, const MatrixXd& T);
+
+VectorXd normal_vector(const Vector3d& a, const Vector3d& b, const Vector3d& c);
 
 std::vector<Facet> transform_facets(const std::vector<Facet>& facets, const MatrixXd& T);
 

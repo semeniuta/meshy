@@ -145,17 +145,35 @@ VectorXd transform_point(const VectorXd& p, const MatrixXd& T) {
 
 }
 
+VectorXd normal_vector(const Vector3d& a, const Vector3d& b, const Vector3d& c) {
+
+    auto ab = b - a;
+    auto ac = c - a;
+
+    auto n = ab.cross(ac);
+
+    return n.normalized();
+
+}
+
 std::vector<Facet> transform_facets(const std::vector<Facet>& facets, const MatrixXd& T) {
 
     std::vector<Facet> transformed_facets;
 
     for (const auto& f : facets) {
 
-        Facet f_t;
-        f_t.normal = f.normal;
-        f_t.v1 = transform_point(f.v1, T);
-        f_t.v2 = transform_point(f.v2, T);
-        f_t.v3 = transform_point(f.v3, T);
+        auto v1t = transform_point(f.v1, T);
+        auto v2t = transform_point(f.v2, T);
+        auto v3t = transform_point(f.v3, T);
+
+        auto n_t = normal_vector(v1t, v2t, v3t);
+
+        Facet f_t{
+            n_t,
+            v1t,
+            v2t,
+            v3t
+        };
 
         transformed_facets.push_back(f_t);
 

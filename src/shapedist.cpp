@@ -119,6 +119,11 @@ std::vector<double> generate_d2_samples(
 std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples) {
 
     std::vector<Facet> facets = read_stl(fname);
+    return generate_d2_samples_for_facets(facets, n_samples);
+
+}
+
+std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples) {
 
     std::vector<double> areas(facets.size());
     std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);

@@ -15,7 +15,11 @@ PYBIND11_MODULE(pymeshy, m)
 {
     m.def("read_stl_and_generate_d2_samples", read_stl_and_generate_d2_samples);
 
+    m.def("generate_d2_samples_for_facets", generate_d2_samples_for_facets);
+
     m.def("read_stl", read_stl);
+
+    m.def("transform_facets", transform_facets);
 
     py::class_<Facet>(m, "Facet")
             .def_readonly("normal", &Facet::normal)

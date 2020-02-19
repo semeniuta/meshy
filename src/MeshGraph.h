@@ -44,9 +44,10 @@ private:
     std::vector<IndexedFacet> facets_;
     std::vector<VertexAggregated> vertices_;
     std::map<Segment, std::vector<int>> segments_;
+    VectorXd centroid_;
 
 public:
-    MeshGraph(const std::vector<Facet>& facets);
+    explicit MeshGraph(const std::vector<Facet>& facets);
 
 };
 

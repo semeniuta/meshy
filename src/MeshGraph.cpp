@@ -3,6 +3,7 @@
 //
 
 #include "MeshGraph.h"
+#include <iostream>
 
 MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
 
@@ -10,6 +11,13 @@ MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
     std::sort(vertices_all.begin(), vertices_all.end(), create_comparator_joint());
 
     vertices_ = aggregate_vertices(vertices_all);
+
+    VectorXd sum = VectorXd::Zero(3);
+    for (const auto& va : vertices_) {
+        sum += va.v;
+    }
+    centroid_ = sum / vertices_.size();
+    std::cout << centroid_ << std::endl;
 
     facets_ = gather_indexed_facets(vertices_, facets);
 

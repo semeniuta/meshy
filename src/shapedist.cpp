@@ -75,10 +75,15 @@ VectorXd point_on_surface_of_triangle(const Facet& facet, double r1, double r2) 
 std::vector<double> generate_d2_samples(
         const std::vector<Facet>& facets,
         const std::vector<double>& ca,
-        unsigned int n) {
+        unsigned int n,
+        int random_state) {
 
     std::random_device rd{};
     std::default_random_engine generator{rd()};
+
+    if (random_state != -1) {
+        generator.seed(random_state);
+    }
 
     double total_area = ca[ca.size() - 1];
     std::uniform_real_distribution<double> distrib_areas{0., total_area};
@@ -116,19 +121,19 @@ std::vector<double> generate_d2_samples(
 
 }
 
-std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples) {
+std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples, int random_state) {
 
     std::vector<Facet> facets = read_stl(fname);
-    return generate_d2_samples_for_facets(facets, n_samples);
+    return generate_d2_samples_for_facets(facets, n_samples, random_state);
 
 }
 
-std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples) {
+std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples, int random_state) {
 
     std::vector<double> areas(facets.size());
     std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
     std::vector<double> ca = cummulative_area(areas);
 
-    return generate_d2_samples(facets, ca, n_samples);
+    return generate_d2_samples(facets, ca, n_samples, random_state);
 
 }

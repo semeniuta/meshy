@@ -21,10 +21,11 @@ VectorXd point_on_surface_of_triangle(const Facet& facet, double r1, double r2);
 std::vector<double> generate_d2_samples(
         const std::vector<Facet>& facets,
         const std::vector<double>& ca,
-        unsigned int n);
+        unsigned int n,
+        int random_state=-1);
 
-std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples);
+std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples, int random_state=-1);
 
-std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples);
+std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples, int random_state=-1);
 
 #endif //MESHY_SHAPEDIST_H

@@ -13,9 +13,15 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(pymeshy, m)
 {
-    m.def("read_stl_and_generate_d2_samples", read_stl_and_generate_d2_samples);
+    m.def("read_stl_and_generate_d2_samples", &read_stl_and_generate_d2_samples,
+          py::arg("fname"),
+          py::arg("n_samples"),
+          py::arg("random_state") = -1);
 
-    m.def("generate_d2_samples_for_facets", generate_d2_samples_for_facets);
+    m.def("generate_d2_samples_for_facets", &generate_d2_samples_for_facets,
+          py::arg("facets"),
+          py::arg("n_samples"),
+          py::arg("random_state") = -1);
 
     m.def("read_stl", read_stl);
 

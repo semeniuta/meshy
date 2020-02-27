@@ -13,6 +13,17 @@
 class Segment : public std::set<int> {
 public:
     Segment(int p1, int p2) : std::set<int>{p1, p2} {};
+
+    int p1() {
+        auto it = begin();
+        return *it;
+    }
+
+    int p2() {
+        auto it = begin();
+        it++;
+        return *it;
+    }
 };
 
 struct IndexedFacet {
@@ -51,7 +62,7 @@ public:
 
     std::vector<Segment> detect_segment_anomalies();
 
-    std::vector<int> get_vertices_containing_segment(const Segment& s);
+    std::vector<int> get_facets_containing_segment(const Segment& s);
 
     int get_facet_vertex(int facet_idx, int vertex_idx);
 

@@ -58,7 +58,7 @@ std::vector<Segment> MeshGraph::detect_segment_anomalies() {
 
 }
 
-std::vector<int> MeshGraph::get_vertices_containing_segment(const Segment& s) {
+std::vector<int> MeshGraph::get_facets_containing_segment(const Segment& s) {
     return segments_[s];
 }
 

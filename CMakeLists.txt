@@ -21,6 +21,8 @@ add_executable(scaler "scaler.cpp" ${SOURCES})
 add_executable(spikemg "spikemg.cpp" ${SOURCES})
 #target_link_libraries(spikemg Eigen3::Eigen)
 
+add_executable(spikemg2 "spikemg2.cpp" ${SOURCES})
+
 add_executable(spikernd "spikernd.cpp" ${SOURCES})
 #target_link_libraries(spikernd Eigen3::Eigen)
 

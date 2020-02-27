@@ -7,20 +7,24 @@
 
 MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
 
+    std::cout << "Gather and sort vertices\n";
     auto vertices_all = gather_vertices(facets);
     std::sort(vertices_all.begin(), vertices_all.end(), create_comparator_joint());
 
+    std::cout << "Aggregate vertices\n";
     vertices_ = aggregate_vertices(vertices_all);
 
+    std::cout << "Compute centroid\n";
     VectorXd sum = VectorXd::Zero(3);
     for (const auto& va : vertices_) {
         sum += va.v;
     }
     centroid_ = sum / vertices_.size();
-    std::cout << centroid_ << std::endl;
 
+    std::cout << "Gather indexed facets\n";
     facets_ = gather_indexed_facets(vertices_, facets);
 
+    std::cout << "Fill a map of segments\n";
     for (int facet_idx = 0; facet_idx < facets.size(); facet_idx++) {
 
         const auto& s1 = facets_[facet_idx].segments[0];
@@ -33,6 +37,44 @@ MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
 
     }
 
+}
+
+std::vector<Segment> MeshGraph::detect_segment_anomalies() {
+
+    std::vector<Segment> segment_anomalies;
+
+    for (const auto& entry : segments_) {
+
+        const auto& facet_indices = entry.second;
+        int n_adjacent_facets = facet_indices.size();
+
+        if (n_adjacent_facets != 2) {
+            segment_anomalies.push_back(entry.first);
+        }
+
+    }
+
+    return segment_anomalies;
+
+}
+
+std::vector<int> MeshGraph::get_vertices_containing_segment(const Segment& s) {
+    return segments_[s];
+}
+
+int MeshGraph::get_facet_vertex(int facet_idx, int vertex_idx) {
+
+    if (facet_idx < 0 || facet_idx >= facets_.size()) {
+        return -1;
+    }
+
+    const auto& f_vertices = facets_[facet_idx].vertices;
+
+    if (vertex_idx < 0 || vertex_idx >= f_vertices.size()) {
+        return -1;
+    }
+
+    return f_vertices[vertex_idx];
 }
 
 std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets) {

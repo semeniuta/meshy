@@ -49,6 +49,12 @@ private:
 public:
     explicit MeshGraph(const std::vector<Facet>& facets);
 
+    std::vector<Segment> detect_segment_anomalies();
+
+    std::vector<int> get_vertices_containing_segment(const Segment& s);
+
+    int get_facet_vertex(int facet_idx, int vertex_idx);
+
 };
 
 std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets);

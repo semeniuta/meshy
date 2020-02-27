@@ -21,22 +21,29 @@ int main(int argc, char **argv) {
     auto fname = argv[1];
     std::vector<Facet> facets = read_stl(fname);
 
-    MeshGraph mg{facets};
+    IndexedMesh im{facets};
 
-    std::vector<Segment> sa = mg.detect_segment_anomalies();
+    std::vector<Segment> sa = detect_segment_anomalies(im);
+
+    std::vector<Facet> f_out;
 
     for (auto& segment : sa) {
-        std::vector<int> facet_indices = mg.get_facets_containing_segment(segment);
+        std::vector<int> facet_indices = im.segments_[segment];
 
         std::cout << segment.p2() << "-" << segment.p1() << " " << facet_indices.size() << ": ";
         for (int f_idx : facet_indices) {
+
+            f_out.push_back(facets[f_idx]);
+
             std::cout << f_idx << "(";
-            std::cout << mg.get_facet_vertex(f_idx, 0) << ", ";
-            std::cout << mg.get_facet_vertex(f_idx, 1)<< ", ";
-            std::cout << mg.get_facet_vertex(f_idx, 2) << ") ";
+            std::cout << im.facets_[f_idx].vertices[0] << ", ";
+            std::cout << im.facets_[f_idx].vertices[1] << ", ";
+            std::cout << im.facets_[f_idx].vertices[2] << ") ";
         }
         std::cout << "\n";
     }
+
+    write_stl(f_out, "anomalies.stl", "Made by Oleksandr");
 
     return 0;
 }

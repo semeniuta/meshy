@@ -5,7 +5,7 @@
 #include "MeshGraph.h"
 #include <iostream>
 
-MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
+IndexedMesh::IndexedMesh(const std::vector<Facet>& facets) {
 
     std::cout << "Gather and sort vertices\n";
     auto vertices_all = gather_vertices(facets);
@@ -39,11 +39,11 @@ MeshGraph::MeshGraph(const std::vector<Facet>& facets) {
 
 }
 
-std::vector<Segment> MeshGraph::detect_segment_anomalies() {
+std::vector<Segment> detect_segment_anomalies(const IndexedMesh& im) {
 
     std::vector<Segment> segment_anomalies;
 
-    for (const auto& entry : segments_) {
+    for (const auto& entry : im.segments_) {
 
         const auto& facet_indices = entry.second;
         int n_adjacent_facets = facet_indices.size();
@@ -56,25 +56,6 @@ std::vector<Segment> MeshGraph::detect_segment_anomalies() {
 
     return segment_anomalies;
 
-}
-
-std::vector<int> MeshGraph::get_facets_containing_segment(const Segment& s) {
-    return segments_[s];
-}
-
-int MeshGraph::get_facet_vertex(int facet_idx, int vertex_idx) {
-
-    if (facet_idx < 0 || facet_idx >= facets_.size()) {
-        return -1;
-    }
-
-    const auto& f_vertices = facets_[facet_idx].vertices;
-
-    if (vertex_idx < 0 || vertex_idx >= f_vertices.size()) {
-        return -1;
-    }
-
-    return f_vertices[vertex_idx];
 }
 
 std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets) {

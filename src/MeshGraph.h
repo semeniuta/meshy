@@ -49,24 +49,18 @@ struct VertexAggregated {
     std::vector<FacetVertex> facets;
 };
 
-class MeshGraph {
+struct IndexedMesh {
 
-private:
     std::vector<IndexedFacet> facets_;
     std::vector<VertexAggregated> vertices_;
     std::map<Segment, std::vector<int>> segments_;
     VectorXd centroid_;
 
-public:
-    explicit MeshGraph(const std::vector<Facet>& facets);
-
-    std::vector<Segment> detect_segment_anomalies();
-
-    std::vector<int> get_facets_containing_segment(const Segment& s);
-
-    int get_facet_vertex(int facet_idx, int vertex_idx);
+    explicit IndexedMesh(const std::vector<Facet>& facets);
 
 };
+
+std::vector<Segment> detect_segment_anomalies(const IndexedMesh& im);
 
 std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets);
 

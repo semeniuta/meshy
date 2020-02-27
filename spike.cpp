@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     }
     std::cout << std::endl;
 
-    MeshGraph mesh_graph{facets};
+    IndexedMesh im{facets};
 
     return 0;
 }

@@ -60,6 +60,24 @@ struct IndexedMesh {
 
 };
 
+struct BipartiteDigraph {
+
+    std::set<int> nodes_;
+    std::vector<std::set<int>> adj_;
+
+    explicit BipartiteDigraph(unsigned int size) : adj_(size) {}
+
+    void add_edge(unsigned int a, unsigned int b) {
+
+        if (a >= adj_.size() || b >= adj_.size()) {
+            throw std::runtime_error("too high node index");
+        }
+
+        adj_[a].insert(b);
+    }
+
+};
+
 std::vector<Segment> detect_segment_anomalies(const IndexedMesh& im);
 
 std::vector<VertexInfo> gather_vertices(const std::vector<Facet>& facets);

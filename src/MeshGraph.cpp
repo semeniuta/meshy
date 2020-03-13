@@ -121,6 +121,8 @@ std::vector<VertexAggregated> aggregate_vertices(const std::vector<VertexInfo>& 
 
     }
 
+    res.push_back({sorted_vertices[current_i].v, std::move(facet_ids)});
+
     return res;
 
 }

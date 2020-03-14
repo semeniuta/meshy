@@ -183,3 +183,20 @@ std::vector<Segment> gather_segments_in_a_vector(const std::map<Segment, std::ve
 
 }
 
+MeshGraph build_mesh_graph(const IndexedMesh& im) {
+
+    MeshGraph mg{im.facets_.size(), im.segments_.size()};
+
+    int s_index = 0;
+    for (const auto& s_entry : im.segments_adjacency_) {
+
+        for (int f_index : s_entry.second) {
+            mg.add_edge(f_index, s_index);
+        }
+
+        s_index++;
+    }
+
+    return mg;
+
+}

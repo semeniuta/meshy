@@ -102,4 +102,6 @@ std::vector<IndexedFacet> gather_indexed_facets(
 
 std::vector<Segment> gather_segments_in_a_vector(const std::map<Segment, std::vector<int>>& segments);
 
+MeshGraph build_mesh_graph(const IndexedMesh& im);
+
 #endif //MESHY_MESHGRAPH_H

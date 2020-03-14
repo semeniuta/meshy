@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
     std::vector<Facet> f_out;
 
     for (auto& segment : sa) {
-        std::vector<int> facet_indices = im.segments_[segment];
+        std::vector<int> facet_indices = im.segments_adjacency_[segment];
 
         std::cout << segment.p2() << "-" << segment.p1() << " " << facet_indices.size() << ": ";
         for (int f_idx : facet_indices) {

@@ -31,11 +31,14 @@ IndexedMesh::IndexedMesh(const std::vector<Facet>& facets) {
         const auto& s2 = facets_[facet_idx].segments[1];
         const auto& s3 = facets_[facet_idx].segments[2];
 
-        segments_[s1].push_back(facet_idx);
-        segments_[s2].push_back(facet_idx);
-        segments_[s3].push_back(facet_idx);
+        segments_adjacency_[s1].push_back(facet_idx);
+        segments_adjacency_[s2].push_back(facet_idx);
+        segments_adjacency_[s3].push_back(facet_idx);
 
     }
+
+    std::cout << "Gather segments from the map\n";
+    segments_ = gather_segments_in_a_vector(segments_adjacency_);
 
 }
 
@@ -43,7 +46,7 @@ std::vector<Segment> detect_segment_anomalies(const IndexedMesh& im) {
 
     std::vector<Segment> segment_anomalies;
 
-    for (const auto& entry : im.segments_) {
+    for (const auto& entry : im.segments_adjacency_) {
 
         const auto& facet_indices = entry.second;
         int n_adjacent_facets = facet_indices.size();

@@ -53,7 +53,8 @@ struct IndexedMesh {
 
     std::vector<IndexedFacet> facets_;
     std::vector<VertexAggregated> vertices_;
-    std::map<Segment, std::vector<int>> segments_;
+    std::vector<Segment> segments_;
+    std::map<Segment, std::vector<int>> segments_adjacency_;
     VectorXd centroid_;
 
     explicit IndexedMesh(const std::vector<Facet>& facets);

@@ -61,20 +61,29 @@ struct IndexedMesh {
 
 };
 
-struct BipartiteDigraph {
+struct MeshGraph {
 
-    std::set<int> nodes_;
-    std::vector<std::set<int>> adj_;
+    std::vector<std::vector<int>> adj_f2s_;
+    std::vector<std::vector<int>> adj_s2f_;
 
-    explicit BipartiteDigraph(unsigned int size) : adj_(size) {}
+    MeshGraph() = delete;
 
-    void add_edge(unsigned int a, unsigned int b) {
+    MeshGraph(unsigned long n_facets, unsigned long n_segments)
+        : adj_f2s_(n_facets), adj_s2f_(n_segments) {}
 
-        if (a >= adj_.size() || b >= adj_.size()) {
-            throw std::runtime_error("too high node index");
+    void add_edge(unsigned int f, unsigned int s) {
+
+        if (f >= adj_f2s_.size()) {
+            throw std::runtime_error("too high facet index");
         }
 
-        adj_[a].insert(b);
+        if (s >= adj_s2f_.size()) {
+            throw std::runtime_error("too high segment index");
+        }
+
+        adj_f2s_[f].push_back(s);
+        adj_s2f_[s].push_back(f);
+
     }
 
 };

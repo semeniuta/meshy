@@ -90,4 +90,6 @@ std::vector<IndexedFacet> gather_indexed_facets(
         const std::vector<VertexAggregated>& va,
         const std::vector<Facet>& facets);
 
+std::vector<Segment> gather_segments_in_a_vector(const std::map<Segment, std::vector<int>>& segments);
+
 #endif //MESHY_MESHGRAPH_H

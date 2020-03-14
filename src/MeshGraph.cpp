@@ -167,3 +167,16 @@ std::vector<IndexedFacet> gather_indexed_facets(
 
 }
 
+std::vector<Segment> gather_segments_in_a_vector(const std::map<Segment, std::vector<int>>& segments) {
+
+    std::vector<Segment> res;
+    res.reserve(segments.size());
+
+    for (const auto& s_entry : segments) {
+        res.push_back(s_entry.first);
+    }
+
+    return res;
+
+}
+

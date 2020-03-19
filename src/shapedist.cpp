@@ -72,6 +72,52 @@ VectorXd point_on_surface_of_triangle(const Facet& facet, double r1, double r2) 
 
 }
 
+std::vector<std::vector<VectorXd>> generate_random_points(
+        const std::vector<Facet>& facets,
+        const std::vector<double>& ca,
+        unsigned int n,
+        unsigned int n_points_per_iter,
+        int random_state) {
+
+    std::random_device rd{};
+    std::default_random_engine generator{rd()};
+
+    if (random_state != -1) {
+        generator.seed(random_state);
+    }
+
+    double total_area = ca[ca.size() - 1];
+    std::uniform_real_distribution<double> distrib_areas{0., total_area};
+    std::uniform_real_distribution<double> distrib_r1{0., 1.};
+    std::uniform_real_distribution<double> distrib_r2{0., 1.};
+
+    std::vector<std::vector<VectorXd>> sampled_points(n);
+
+    for (int i = 0; i < n; i++) {
+
+        sampled_points[i].reserve(n_points_per_iter);
+
+        for (int j = 0; j > n_points_per_iter; j++) {
+
+            double random_area = distrib_areas(generator);
+
+            double r1 = distrib_r1(generator);
+            double r2 = distrib_r2(generator);
+
+            auto closest_idx = search_closest(ca, random_area);
+            auto facet = facets[closest_idx];
+
+            auto p = point_on_surface_of_triangle(facet, r1, r2);
+
+            sampled_points[i].push_back(p);
+        }
+
+    }
+
+    return sampled_points;
+
+}
+
 std::vector<double> generate_d2_samples(
         const std::vector<Facet>& facets,
         const std::vector<double>& ca,

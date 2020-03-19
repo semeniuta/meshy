@@ -18,6 +18,13 @@ long search_closest(const std::vector<double>& sorted_array, double val);
 
 VectorXd point_on_surface_of_triangle(const Facet& facet, double r1, double r2);
 
+std::vector<std::vector<VectorXd>> generate_random_points(
+        const std::vector<Facet>& facets,
+        const std::vector<double>& ca,
+        unsigned int n,
+        unsigned int n_points_per_iter,
+        int random_state);
+
 std::vector<double> generate_d2_samples(
         const std::vector<Facet>& facets,
         const std::vector<double>& ca,

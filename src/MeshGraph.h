@@ -63,26 +63,26 @@ struct IndexedMesh {
 
 struct MeshGraph {
 
-    std::vector<std::vector<int>> adj_f2s_;
-    std::vector<std::vector<int>> adj_s2f_;
+    std::vector<std::vector<int>> adj_facets_;
+    std::vector<std::vector<int>> adj_segments_;
 
     MeshGraph() = delete;
 
     MeshGraph(unsigned long n_facets, unsigned long n_segments)
-        : adj_f2s_(n_facets), adj_s2f_(n_segments) {}
+        : adj_facets_(n_facets), adj_segments_(n_segments) {}
 
     void add_edge(unsigned int f, unsigned int s) {
 
-        if (f >= adj_f2s_.size()) {
+        if (f >= adj_facets_.size()) {
             throw std::runtime_error("too high facet index");
         }
 
-        if (s >= adj_s2f_.size()) {
+        if (s >= adj_segments_.size()) {
             throw std::runtime_error("too high segment index");
         }
 
-        adj_f2s_[f].push_back(s);
-        adj_s2f_[s].push_back(f);
+        adj_facets_[f].push_back(s);
+        adj_segments_[s].push_back(f);
 
     }
 

@@ -35,4 +35,6 @@ std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, i
 
 std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples, int random_state=-1);
 
+std::vector<std::vector<VectorXd>> generate_random_points_for_facets(const std::vector<Facet>& facets, int n_samples, int n_points, int random_state);
+
 #endif //MESHY_SHAPEDIST_H

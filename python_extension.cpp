@@ -23,6 +23,12 @@ PYBIND11_MODULE(pymeshy, m)
           py::arg("n_samples"),
           py::arg("random_state") = -1);
 
+    m.def("generate_random_points_for_facets", &generate_random_points_for_facets,
+          py::arg("facets"),
+          py::arg("n_samples"),
+          py::arg("n_points"),
+          py::arg("random_state") = -1);
+
     m.def("read_stl", read_stl);
 
     m.def("transform_facets", transform_facets);

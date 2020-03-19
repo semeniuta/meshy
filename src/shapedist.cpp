@@ -158,3 +158,13 @@ std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& fac
     return generate_d2_samples(facets, ca, n_samples, random_state);
 
 }
+
+std::vector<std::vector<VectorXd>> generate_random_points_for_facets(const std::vector<Facet>& facets, int n_samples, int n_points, int random_state) {
+
+    std::vector<double> areas(facets.size());
+    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::vector<double> ca = cummulative_area(areas);
+
+    return generate_random_points(facets, ca, n_samples, n_points, random_state);
+
+}

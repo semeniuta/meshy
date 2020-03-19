@@ -97,7 +97,7 @@ std::vector<std::vector<VectorXd>> generate_random_points(
 
         sampled_points[i].reserve(n_points_per_iter);
 
-        for (int j = 0; j > n_points_per_iter; j++) {
+        for (int j = 0; j < n_points_per_iter; j++) {
 
             double random_area = distrib_areas(generator);
 
@@ -124,39 +124,14 @@ std::vector<double> generate_d2_samples(
         unsigned int n,
         int random_state) {
 
-    std::random_device rd{};
-    std::default_random_engine generator{rd()};
-
-    if (random_state != -1) {
-        generator.seed(random_state);
-    }
-
-    double total_area = ca[ca.size() - 1];
-    std::uniform_real_distribution<double> distrib_areas{0., total_area};
-    std::uniform_real_distribution<double> distrib_r1{0., 1.};
-    std::uniform_real_distribution<double> distrib_r2{0., 1.};
+    auto sampled_points = generate_random_points(facets, ca, n, 2, random_state);
 
     std::vector<double> distances(n);
 
     for (int i = 0; i < n; i++) {
 
-        double random_area_1 = distrib_areas(generator);
-        double random_area_2 = distrib_areas(generator);
-
-        double r1_1 = distrib_r1(generator);
-        double r2_1 = distrib_r2(generator);
-
-        double r1_2 = distrib_r1(generator);
-        double r2_2 = distrib_r2(generator);
-
-        auto closest_idx_1 = search_closest(ca, random_area_1);
-        auto facet_1 = facets[closest_idx_1];
-
-        auto closest_idx_2 = search_closest(ca, random_area_2);
-        auto facet_2 = facets[closest_idx_2];
-
-        auto p1 = point_on_surface_of_triangle(facet_1, r1_1, r2_1);
-        auto p2 = point_on_surface_of_triangle(facet_2, r1_2, r2_2);
+        auto p1 = sampled_points[i][0];
+        auto p2 = sampled_points[i][1];
 
         double dist = euclidean_distance(p1, p2);
         distances[i] = dist;

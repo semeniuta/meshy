@@ -61,10 +61,12 @@ struct IndexedMesh {
 
 };
 
+enum class MeshGraphNodeType {facet, segment};
+
 struct MeshGraph {
 
-    std::vector<std::vector<int>> adj_facets_;
-    std::vector<std::vector<int>> adj_segments_;
+    std::vector<std::vector<unsigned int>> adj_facets_;
+    std::vector<std::vector<unsigned int>> adj_segments_;
 
     MeshGraph() = delete;
 

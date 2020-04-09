@@ -121,6 +121,50 @@ std::vector<double> generate_d2_samples(
 
 }
 
+ThreePointsMeasurements generate_three_points_samples(
+        const std::vector<Facet>& facets,
+        const std::vector<double>& ca,
+        unsigned int n,
+        int random_state) {
+
+    ThreePointsMeasurements meas{};
+
+    auto sampled_points = generate_random_points(facets, ca, n, 3, random_state);
+
+    for (const auto& points : sampled_points) {
+
+        auto d = triangle_sides_distances(points[0], points[1], points[2]);
+
+        std::array<int, 3> indices{0, 1, 2};
+        std::sort(indices.begin(),
+                  indices.end(),
+                  [&d](int i, int j) {return d[i] < d[j]; });
+
+        std::vector<VectorXd> points_ordered {
+            points[indices[0]],
+            points[indices[1]],
+            points[indices[2]]
+        };
+
+        auto thetas = triangle_angles_cos(points_ordered);
+        double area = triangle_area(points_ordered[0], points_ordered[1], points_ordered[2]);
+
+        meas.theta_1.push_back(thetas[0]);
+        meas.theta_2.push_back(thetas[1]);
+        meas.theta_3.push_back(thetas[2]);
+
+        meas.d1.push_back(d[indices[0]]);
+        meas.d2.push_back(d[indices[1]]);
+        meas.d3.push_back(d[indices[2]]);
+
+        meas.area.push_back(area);
+
+    }
+
+    return meas;
+
+}
+
 std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, int n_samples, int random_state) {
 
     std::vector<Facet> facets = read_stl(fname);
@@ -131,7 +175,7 @@ std::vector<double> read_stl_and_generate_d2_samples(const std::string& fname, i
 std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& facets, int n_samples, int random_state) {
 
     std::vector<double> areas(facets.size());
-    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::transform(facets.begin(), facets.end(), areas.begin(), &facet_area);
     std::vector<double> ca = cummulative_area(areas);
 
     return generate_d2_samples(facets, ca, n_samples, random_state);
@@ -141,9 +185,19 @@ std::vector<double> generate_d2_samples_for_facets(const std::vector<Facet>& fac
 std::vector<std::vector<VectorXd>> generate_random_points_for_facets(const std::vector<Facet>& facets, int n_samples, int n_points, int random_state) {
 
     std::vector<double> areas(facets.size());
-    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::transform(facets.begin(), facets.end(), areas.begin(), &facet_area);
     std::vector<double> ca = cummulative_area(areas);
 
     return generate_random_points(facets, ca, n_samples, n_points, random_state);
+
+}
+
+ThreePointsMeasurements generate_three_points_samples_for_facets(const std::vector<Facet>& facets, int n_samples, int random_state) {
+
+    std::vector<double> areas(facets.size());
+    std::transform(facets.begin(), facets.end(), areas.begin(), &facet_area);
+    std::vector<double> ca = cummulative_area(areas);
+
+    return generate_three_points_samples(facets, ca, n_samples, random_state);
 
 }

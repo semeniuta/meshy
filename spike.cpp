@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     std::cout << facets[0].normal << std::endl;
 
     std::vector<double> areas(facets.size());
-    std::transform(facets.begin(), facets.end(), areas.begin(), &triangle_area);
+    std::transform(facets.begin(), facets.end(), areas.begin(), &facet_area);
     std::vector<double> ca = cummulative_area(areas);
 
     auto idx_closest = search_closest(ca, 20.);
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
 
     std::cout << *(res - 1) << ", " << *res << ", " << *(res + 1) << std::endl;
 
-    auto distances = generate_d2_samples(facets, ca, 100);
+    auto distances = generate_d2_samples(facets, ca, 100, 42);
     std::sort(distances.begin(), distances.end());
 
     std::cout << "Distances:\n";

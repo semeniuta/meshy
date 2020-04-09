@@ -13,15 +13,23 @@ double euclidean_distance(const VectorXd& v1, const VectorXd& v2) {
 
 double triangle_area(const Facet& facet) {
 
-    auto d1 = euclidean_distance(facet.v1, facet.v2);
-    auto d2 = euclidean_distance(facet.v2, facet.v3);
-    auto d3 = euclidean_distance(facet.v3, facet.v1);
+    std::array<double, 3> d = triangle_sides_distances(facet);
 
-    auto s = 0.5 * (d1 + d2 + d3);
+    auto s = 0.5 * (d[0] + d[1] + d[2]);
 
-    auto area = sqrt(s * (s - d1) * (s - d2) * (s - d3));
+    auto area = sqrt(s * (s - d[0]) * (s - d[1]) * (s - d[2]));
 
     return area;
+}
 
+std::array<double, 3> triangle_sides_distances(const Facet& facet) {
+
+    std::array<double, 3> distances{
+            euclidean_distance(facet.v1, facet.v2),
+            euclidean_distance(facet.v2, facet.v3),
+            euclidean_distance(facet.v3, facet.v1)
+    };
+
+    return distances;
 }
 

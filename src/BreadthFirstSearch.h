@@ -19,7 +19,8 @@ public:
           marked_facets_(mg.adj_facets_.size()),
           marked_segments_(mg.adj_segments_.size()),
           edgeto_facets_(mg.adj_facets_.size()),
-          edgeto_segments_(mg.adj_segments_.size()) {};
+          edgeto_segments_(mg.adj_segments_.size()),
+          distances_(mg.adj_facets_.size()) {};
 
     void bfs(unsigned int start_facet);
 
@@ -30,6 +31,7 @@ private:
     std::vector<bool> marked_segments_;
     std::vector<int> edgeto_facets_;
     std::vector<int> edgeto_segments_;
+    std::vector<int> distances_;
 
 };
 

@@ -24,6 +24,8 @@ public:
 
     void bfs(unsigned int start_facet);
 
+    std::vector<int> facets_around(unsigned int max_dist);
+
 private:
 
     const MeshGraph& mesh_graph_;
@@ -32,6 +34,7 @@ private:
     std::vector<int> edgeto_facets_;
     std::vector<int> edgeto_segments_;
     std::vector<int> distances_;
+    std::map<int, std::vector<int>> dist_map_;
 
 };
 

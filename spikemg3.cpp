@@ -32,5 +32,14 @@ int main(int argc, char **argv) {
 
     search.bfs(0);
 
+    auto neighbors = search.facets_around(30);
+    std::vector<Facet> facets_around;
+    facets_around.reserve(neighbors.size());
+    for (int i : neighbors) {
+        facets_around.push_back(facets[i]);
+    }
+
+    //write_stl(facets_around, "facets_around.stl", "Made by Oleksandr");
+
     return 0;
 }

@@ -24,7 +24,15 @@ void BreadthFirstSearch::bfs(unsigned int start_facet) {
         q.pop();
 
         if (node_type == MeshGraphNodeType::facet) {
-            std::cout << distances_[node_index] << std::endl;
+
+            int dist = distances_[node_index];
+
+            if (dist_map_.find(dist) != dist_map_.end()) {
+                dist_map_[dist].push_back(node_index);
+            } else {
+                dist_map_[dist] = std::vector<int>();
+            }
+
         }
 
         const std::vector<unsigned int>& adj =
@@ -68,5 +76,21 @@ void BreadthFirstSearch::bfs(unsigned int start_facet) {
         }
 
     }
+
+}
+
+std::vector<int> BreadthFirstSearch::facets_around(unsigned int max_dist) {
+
+    std::vector<int> facets;
+
+    for (int d = 0; d < max_dist; d++) {
+
+        for (int idx : dist_map_[d]) {
+            facets.push_back(idx);
+        }
+
+    }
+
+    return  facets;
 
 }

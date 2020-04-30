@@ -27,11 +27,12 @@ void BreadthFirstSearch::bfs(unsigned int start_facet) {
 
             int dist = distances_[node_index];
 
-            if (dist_map_.find(dist) != dist_map_.end()) {
-                dist_map_[dist].push_back(node_index);
-            } else {
+            if (dist_map_.find(dist) == dist_map_.end()) {
+                // create new vector
                 dist_map_[dist] = std::vector<int>();
             }
+
+            dist_map_[dist].push_back(node_index);
 
         }
 

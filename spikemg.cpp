@@ -1,6 +1,9 @@
-//
-// Created by Oleksandr Semeniuta on 12/02/2020.
-//
+/**
+ * Read an STL file, gather its vertices as VertexInfo objects,
+ * then sort them using VertexInfoComparator,
+ * then aggregate them into a vector of VertexAggregated objects,
+ * then gather IndexedFacet objects.
+ */
 
 #include <iostream>
 #include <vector>

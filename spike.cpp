@@ -1,6 +1,9 @@
-//
-// Created by Oleksandr Semeniuta on 05/02/2020.
-//
+/**
+ * Read an STL file, sorts its facets' areas, demonstrate
+ * generation of D2 samples.
+ *
+ * Play around with Segment objects.
+ */
 
 #include <iostream>
 #include <vector>

@@ -1,11 +1,11 @@
-//
-// Created by Oleksandr Semeniuta on 27/02/2020.
-//
+/**
+ * Read an STL file, detect segment anomalies,
+ * and save the subset of the original mesh
+ * containing facets adjacent to the anomalous segments.
+ */
 
 #include <iostream>
 #include <vector>
-#include <set>
-#include <algorithm>
 #include "stl.h"
 #include "MeshGraph.h"
 

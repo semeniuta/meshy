@@ -1,6 +1,8 @@
-//
-// Created by Oleksandr Semeniuta on 11/02/2020.
-//
+/**
+ * Read an STL file, scale the mesh with a
+ * homogeneous transformation, and save the
+ * scaled mesh.
+ */
 
 #include <iostream>
 #include "stl.h"

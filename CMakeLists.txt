@@ -11,16 +11,12 @@ include_directories("eigen-3.3.7")
 file(GLOB SOURCES "src/*.cpp")
 include_directories("src")
 
-add_executable(spike "spike.cpp" ${SOURCES})
-
 add_executable(scaler "scaler.cpp" ${SOURCES})
 
-add_executable(spikemg "spikemg.cpp" ${SOURCES})
-
-add_executable(spikemg2 "spikemg2.cpp" ${SOURCES})
-
-add_executable(spikemg3 "spikemg3.cpp" ${SOURCES})
-
-add_executable(spikernd "spikernd.cpp" ${SOURCES})
-
 pybind11_add_module(pymeshy python_extension.cpp ${SOURCES})
+
+add_executable(spike "spikes/spike.cpp" ${SOURCES})
+add_executable(spikemg "spikes/spikemg.cpp" ${SOURCES})
+add_executable(spikemg2 "spikes/spikemg2.cpp" ${SOURCES})
+add_executable(spikemg3 "spikes/spikemg3.cpp" ${SOURCES})
+add_executable(spikernd "spikes/spikernd.cpp" ${SOURCES})

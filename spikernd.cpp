@@ -1,6 +1,6 @@
-//
-// Created by Oleksandr Semeniuta on 05/02/2020.
-//
+/**
+ * Play around with random number generation.
+ */
 
 #include <iostream>
 #include <random>

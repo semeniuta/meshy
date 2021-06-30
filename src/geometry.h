@@ -7,6 +7,7 @@
 
 #include "stl.h"
 #include <array>
+#include <cmath>
 
 double euclidean_distance(const VectorXd& v1, const VectorXd& v2);
 
@@ -19,5 +20,11 @@ std::array<double, 3> triangle_sides_distances(const VectorXd& v1, const VectorX
 double angle_cos_between_two_vectors(const VectorXd& v1, const VectorXd& v2);
 
 std::array<double, 3> triangle_angles_cos(const std::vector<VectorXd>& points);
+
+MatrixXd rotation_matrix_x(double angle);
+
+MatrixXd rotation_matrix_y(double angle);
+
+MatrixXd rotation_matrix_z(double angle);
 
 #endif //MESHY_GEOMETRY_H

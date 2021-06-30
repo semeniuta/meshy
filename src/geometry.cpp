@@ -83,3 +83,45 @@ std::array<double, 3> triangle_angles_cos(const std::vector<VectorXd>& points) {
 
 }
 
+MatrixXd rotation_matrix_x(double angle) {
+
+    double c = std::cos(angle);
+    double s = std::sin(angle);
+
+    MatrixXd R{3, 3};
+
+    R << 1, 0,  0,
+         0, c, -s,
+         0, s,  c;
+
+    return R;
+}
+
+MatrixXd rotation_matrix_y(double angle) {
+
+    double c = std::cos(angle);
+    double s = std::sin(angle);
+
+    MatrixXd R{3, 3};
+
+    R <<  c, 0, s,
+          0, 1, 0,
+         -s, 0, c;
+
+    return R;
+}
+
+MatrixXd rotation_matrix_z(double angle) {
+
+    double c = std::cos(angle);
+    double s = std::sin(angle);
+
+    MatrixXd R{3, 3};
+
+    R << c, -s, 0,
+         s,  c, 0,
+         0,  0, 1;
+
+    return R;
+}
+

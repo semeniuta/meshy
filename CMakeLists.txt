@@ -13,6 +13,8 @@ include_directories("src")
 
 add_executable(scaler "scaler.cpp" ${SOURCES})
 
+add_executable(rotate "rotate.cpp" ${SOURCES})
+
 pybind11_add_module(pymeshy python_extension.cpp ${SOURCES})
 
 add_executable(spike "spikes/spike.cpp" ${SOURCES})

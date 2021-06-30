@@ -1,6 +1,8 @@
-//
-// Created by Oleksandr Semeniuta on 11/03/2020.
-//
+/**
+ * Read an STL file, construct a MeshGraph from it,
+ * and demonstrate using breadth-first search (BFS)
+ * to select an area around the facet of interest.
+ */
 
 #include <iostream>
 #include <vector>

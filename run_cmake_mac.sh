@@ -11,7 +11,7 @@ cmake_conda() {
         echo "CONDA_PREFIX is $CONDA_PREFIX"
     fi
 
-    PY_LIB=$(ls $CONDA_PREFIX/lib/libpython?.?m.dylib)
+    PY_LIB=$(ls $CONDA_PREFIX/lib/libpython*.dylib)
     echo "Python library is at $PY_LIB"
 
     cmake -DPYTHON_LIBRARY=$PY_LIB -DPYTHON_EXECUTABLE=$CONDA_PREFIX/bin/python ..

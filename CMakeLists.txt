@@ -15,6 +15,8 @@ add_executable(scaler "scaler.cpp" ${SOURCES})
 
 add_executable(rotate "rotate.cpp" ${SOURCES})
 
+add_executable(stats "apps/stats.cpp" ${SOURCES})
+
 pybind11_add_module(pymeshy python_extension.cpp ${SOURCES})
 
 add_executable(spike "spikes/spike.cpp" ${SOURCES})
